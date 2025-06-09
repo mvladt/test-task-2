@@ -1,0 +1,14 @@
+{
+  "name": "vue2-vite4-starter",
+  "type": "module",
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "vue": "^2.7.16"
+  },
+  "devDependencies": {
+    "vite": "^4.5.14",
+    "vite-plugin-vue2": "^2.0.3"
+  }
+}
