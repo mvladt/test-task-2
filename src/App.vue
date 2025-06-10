@@ -1,23 +1,16 @@
 <template>
   <div>
-    <h1>Hello World!</h1>
-    <p>Count is {{ count }}!</p>
-    <button @click="increment">Increment</button>
+    <h1>Тестовое Задание</h1>
+    <Organizations />
   </div>
 </template>
 
 <script>
+import Organizations from "./pages/Organizations.vue";
+
 export default {
   name: "App",
-  data: () => ({
-    count: 1,
-  }),
-  methods: {
-    increment() {
-      console.log("Increment!");
-      this.count += 1;
-    },
-  },
+  components: { Organizations },
 };
 </script>
 
