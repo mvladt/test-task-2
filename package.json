@@ -2,7 +2,8 @@
   "name": "vue2-vite4-starter",
   "type": "module",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build:ghpages": "vite build --outDir=docs --base=test-task-2"
   },
   "dependencies": {
     "axios": "^1.9.0",
