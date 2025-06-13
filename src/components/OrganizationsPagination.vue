@@ -3,10 +3,7 @@
     <div>
       <label>
         Отображать строк на странице
-        <select
-          v-model.number="size"
-          @change="$emit('resize', Number($event.target.value))"
-        >
+        <select v-model.number="size" @change="resizePage">
           <option v-for="s of sizeOptions">{{ s }}</option>
         </select>
       </label>
@@ -23,8 +20,8 @@
 
 <script>
 export default {
-  name: "Pagination",
-  emits: ["resize", "prev", "next"],
+  name: "OrganizationsPagination",
+  emits: ["resize", "change"],
   props: ["totalRowsCount"],
   data() {
     return {
@@ -37,12 +34,16 @@ export default {
     previousPage() {
       if (this.currentPage === 1) return;
       this.currentPage -= 1;
-      this.$emit("prev", this.currentPage);
+      this.$emit("change", this.currentPage);
     },
     nextPage() {
       if (this.currentPage === this.totalPages) return;
       this.currentPage += 1;
-      this.$emit("next", this.currentPage);
+      this.$emit("change", this.currentPage);
+    },
+    resizePage() {
+      this.currentPage = 1;
+      this.$emit("resize", this.size);
     },
   },
   computed: {

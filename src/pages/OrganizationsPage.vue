@@ -1,16 +1,16 @@
 <template>
   <div class="organizations">
     <h2>Табличка Организаций</h2>
+    <OrganizationsActions @create="$router.push('/organizations/new')" />
     <OrganizationsTable
       :data="organizations"
       @sort="sortOrganizations"
       @delete="deleteOrganization"
     />
-    <Pagination
+    <OrganizationsPagination
       v-if="organizations.length"
       :totalRowsCount="totalOrganizationsCount"
-      @next="changePageNumber"
-      @prev="changePageNumber"
+      @change="changePageNumber"
       @resize="changeTableRowsNumber"
     />
   </div>
@@ -20,13 +20,18 @@
 import axios from "axios";
 
 import OrganizationsTable from "../components/OrganizationsTable.vue";
-import Pagination from "../components/Pagination.vue";
+import OrganizationsPagination from "../components/OrganizationsPagination.vue";
+import OrganizationsActions from "../components/OrganizationsActions.vue";
 
 /** @typedef {import("../jsdoc.js").Organization} Organization */
 
 export default {
   name: "Organizations",
-  components: { OrganizationsTable, Pagination },
+  components: {
+    OrganizationsTable,
+    OrganizationsPagination,
+    OrganizationsActions,
+  },
   data() {
     return {
       /** @type {Organization[]} */
@@ -56,10 +61,10 @@ export default {
       await axios.delete(`/organizations/${organizationId}/`);
       this.organizations = await this.fetchOrganizations();
     },
-
     async changeTableRowsNumber(rowsNumber) {
       if (!rowsNumber) return;
 
+      this.fetchParams.page = 1;
       this.fetchParams.page_size = rowsNumber;
       this.organizations = await this.fetchOrganizations();
     },
@@ -68,6 +73,9 @@ export default {
 
       this.fetchParams.page = pageNumber;
       this.organizations = await this.fetchOrganizations();
+    },
+    createOrganization() {
+      this.$router.push("/organizations/new");
     },
 
     // TODO: Вместо возврата 'results' можно сразу присваивать 'this.organizations'.
@@ -89,9 +97,5 @@ export default {
 
 <style>
 .organizations {
-  width: stretch;
-  width: -webkit-fill-available;
-  width: -moz-available;
-  max-width: 900px;
 }
 </style>

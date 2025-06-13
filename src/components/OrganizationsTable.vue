@@ -3,12 +3,20 @@
   <table v-else>
     <thead>
       <tr>
-        <th @click="sortBy('id')" class="center small">
-          ID {{ sortingArrowFor("id") }}
+        <th>
+          <button class="th-button" @click="sortBy('id')">
+            ID {{ sortingArrowFor("id") }}
+          </button>
         </th>
-        <th @click="sortBy('name')">Имя {{ sortingArrowFor("name") }}</th>
-        <th @click="sortBy('is_active')" class="center small">
-          Статус {{ sortingArrowFor("is_active") }}
+        <th>
+          <button class="th-button" @click="sortBy('name')">
+            Имя {{ sortingArrowFor("name") }}
+          </button>
+        </th>
+        <th>
+          <button class="th-button" @click="sortBy('is_active')">
+            Статус {{ sortingArrowFor("is_active") }}
+          </button>
         </th>
         <th></th>
       </tr>
@@ -71,14 +79,24 @@ table {
 th {
   cursor: pointer;
 }
+td {
+  height: 2lh;
+}
 
 .center {
   text-align: center;
 }
 .small {
-  width: 70px;
+  width: 80px;
 }
 .delete-button {
   cursor: pointer;
+}
+.th-button {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: transparent;
+  border: unset;
 }
 </style>
