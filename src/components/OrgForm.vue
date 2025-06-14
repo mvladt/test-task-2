@@ -8,7 +8,7 @@
         <input
           type="text"
           id="name"
-          :value="$props.organization.name"
+          :value="$props.org.name"
           @change="onChange({ name: $event.target.value })"
           required
         />
@@ -22,7 +22,7 @@
         <input
           type="text"
           id="short_name"
-          :value="$props.organization.short_name"
+          :value="$props.org.short_name"
           @change="onChange({ short_name: $event.target.value })"
           required
         />
@@ -35,7 +35,7 @@
       <div>
         <textarea
           id="description"
-          :value="$props.organization.description"
+          :value="$props.org.description"
           @change="onChange({ description: $event.target.value })"
           required
         />
@@ -46,21 +46,24 @@
 
 <script>
 export default {
-  name: "OrganizationForm",
+  name: "OrgForm",
   props: {
-    organization: {
-      default: () => ({
-        name: "",
-        short_name: "",
-        description: "",
-        is_active: true,
-      }),
+    org: {
+      /** @returns { import("../jsdoc.js").Organization } */
+      default() {
+        return {
+          name: "",
+          short_name: "",
+          description: "",
+          is_active: true,
+        };
+      },
     },
   },
   emits: ["change", "submit"],
   methods: {
     onChange(changing) {
-      this.$emit("change", { ...this.$props.organization, ...changing });
+      this.$emit("change", { ...this.$props.org, ...changing });
     },
   },
 };

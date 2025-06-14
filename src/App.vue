@@ -6,11 +6,8 @@
 </template>
 
 <script>
-import Organizations from "./pages/OrganizationsPage.vue";
-
 export default {
   name: "App",
-  components: { Organizations },
 };
 </script>
 

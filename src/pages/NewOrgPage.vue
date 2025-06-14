@@ -1,9 +1,9 @@
 <template>
-  <div class="new-organization">
+  <div class="new-org">
     <h2>Создание Организации</h2>
-    <OrganizationForm
+    <OrgForm
       id="form"
-      :organization="organization"
+      :org="org"
       @change="onFormChange"
       @submit="onFormSubmit"
     />
@@ -17,14 +17,14 @@
 <script>
 import axios from "axios";
 
-import OrganizationForm from "../components/OrganizationForm.vue";
+import OrgForm from "../components/OrgForm.vue";
 
 export default {
-  name: "NewOrganizationPage",
-  components: { OrganizationForm },
+  name: "NewOrgPage",
+  components: { OrgForm },
   data() {
     return {
-      organization: {
+      org: {
         name: "",
         short_name: "",
         description: "",
@@ -33,12 +33,12 @@ export default {
     };
   },
   methods: {
-    onFormChange(changedOrganization) {
-      this.organization = changedOrganization;
+    onFormChange(changed) {
+      this.org = changed;
     },
     onFormSubmit() {
       axios
-        .post("/organizations/", this.organization)
+        .post("/organizations/", this.org)
         .then(() => {
           alert("Организация создана!");
           this.$router.back();
@@ -53,6 +53,6 @@ export default {
 </script>
 
 <style scoped>
-.new-organization {
+.new-org {
 }
 </style>

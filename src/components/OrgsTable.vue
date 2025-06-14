@@ -1,20 +1,19 @@
 <template>
-  <div v-if="!data.length">Нет данных...</div>
-  <table v-else>
+  <table>
     <thead>
       <tr>
         <th>
-          <button class="th-button" @click="sortBy('id')">
+          <button class="th-button" @click="onTableSort('id')">
             ID {{ sortingArrowFor("id") }}
           </button>
         </th>
         <th>
-          <button class="th-button" @click="sortBy('name')">
+          <button class="th-button" @click="onTableSort('name')">
             Имя {{ sortingArrowFor("name") }}
           </button>
         </th>
         <th>
-          <button class="th-button" @click="sortBy('is_active')">
+          <button class="th-button" @click="onTableSort('is_active')">
             Статус {{ sortingArrowFor("is_active") }}
           </button>
         </th>
@@ -39,8 +38,12 @@
 </template>
 
 <script>
+import { mapStores } from "pinia";
+
+import orgsStore from "../orgsStore.js";
+
 export default {
-  name: "OrganizationsTable",
+  name: "OrgsTable",
   props: {
     data: {
       type: Array,
@@ -48,25 +51,25 @@ export default {
     },
   },
   emits: ["sort", "delete"],
-  data() {
-    return {
-      sortingColumn: "",
-      sortingOrder: "",
-    };
+  computed: {
+    ...mapStores(orgsStore),
   },
   methods: {
-    sortBy(colunm) {
+    onTableSort(colunm) {
       // При смене столбца — порядок сбрасываем.
-      if (this.sortingColumn !== colunm) this.sortingOrder = "asc";
-      else this.sortingOrder = this.sortingOrder === "asc" ? "desc" : "asc";
+      if (this.orgsStore.sortColumn !== colunm)
+        this.orgsStore.sortOrder = "asc";
+      else
+        this.orgsStore.sortOrder =
+          this.orgsStore.sortOrder === "asc" ? "desc" : "asc";
 
-      this.sortingColumn = colunm;
+      this.orgsStore.sortColumn = colunm;
 
-      this.$emit("sort", this.sortingColumn, this.sortingOrder);
+      this.$emit("sort", this.orgsStore.sortColumn, this.orgsStore.sortOrder);
     },
     sortingArrowFor(column) {
-      if (this.sortingColumn !== column) return "";
-      return this.sortingOrder === "asc" ? "↓" : "↑";
+      if (this.orgsStore.sortColumn !== column) return "";
+      return this.orgsStore.sortOrder === "asc" ? "↓" : "↑";
     },
   },
 };
@@ -75,9 +78,6 @@ export default {
 <style scoped>
 table {
   width: 100%;
-}
-th {
-  cursor: pointer;
 }
 td {
   height: 2lh;
@@ -93,6 +93,7 @@ td {
   cursor: pointer;
 }
 .th-button {
+  cursor: pointer;
   font-family: inherit;
   font-weight: bold;
   font-size: 1rem;

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "OrganizationsActions",
+  name: "OrgsActions",
   emits: ["create"],
 };
 </script>
